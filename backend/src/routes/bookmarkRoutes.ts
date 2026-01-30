@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
 import { Bookmark } from '../models/bookmark';
-import { log } from 'console';
 
 const router = express.Router();
 
