@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+:root {
+  /* ===== COLORS ===== */
+  --neutral-900: #051513;
+  --neutral-800: #4c5c59;
+  --neutral-500: #899492;
+  --neutral-400: #c0cfcc;
+  --neutral-300: #dde9e7;
+  --neutral-100: #e8f0ef;
+  --neutral-0: #ffffff;
+
+  --neutral-dark-0: #0f172a;
+  --neutral-dark-100: #b1b9b9;
+  --neutral-dark-300: #00706e;
+  --neutral-dark-500: #004241;
+  --neutral-dark-600: #002e2d;
+  --neutral-dark-800: #001f1f;
+  --neutral-dark-900: #001414;
+
+  --teal-700: #014745;
+  --teal-800: #013c3b;
+
+  --red-600: #fd4740;
+  --red-800: #cbda04;
+
+  /* ===== TYPO ===== */
+  --font-sans: Manrope, sans-serif;
+
+  --fs-preset-1: 24px;
+  --lh-preset-1: 140%;
+
+  --fs-preset-2: 20px;
+  --lh-preset-2: 120%;
+
+  --fs-preset-3: 16px;
+  --lh-preset-3: 130%;
+
+  --fs-preset-4: 14px;
+  --lh-preset-4: 140%;
+
+  --fs-preset-5: 12px;
+  --lh-preset-5: 140%;
+
+  /* ===== WEIGHTS ===== */
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ===== SPACING ===== */
+  --s-025: 2px;
+  --s-050: 4px;
+  --s-075: 6px;
+  --s-100: 8px;
+  --s-125: 10px;
+  --s-150: 12px;
+  --s-200: 15px;
+  --s-250: 20px;
+  --s-300: 24px;
+  --s-400: 32px;
+  --s-500: 40px;
+  --s-600: 48px;
+  --s-800: 64px;
+  --s-1000: 80px;
+  --s-1200: 96px;
+  --s-1400: 112px;
+  --s-1600: 128px;
+  --s-1800: 140px;
+
+  /* ===== RADIUS ===== */
+  --r-4: 4px;
+  --r-6: 6px;
+  --r-8: 8px;
+  --r-10: 10px;
+  --r-12: 12px;
+  --r-16: 16px;
+  --r-20: 20px;
+  --r-24: 24px;
+  --r-full: 999px;
+}
