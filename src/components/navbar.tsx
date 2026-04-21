@@ -8,7 +8,7 @@ export default function Navbar() {
         <nav className="flex flex-wrap items-center justify-between gap-2 bg-white dark:bg-neutral-800 px-4 py-3" style={{ minWidth: '220px' }}>
             {/* menu + search */}
             <div className="flex items-center gap-3 flex-1 min-w-0">
-                <button className="inline md:hidden p-2.5 bg-white rounded-md shadow-sm w-10 h-10 border border-neutral-400">
+                <button className="inline lg:hidden p-2.5 bg-white rounded-md shadow-sm w-10 h-10 border border-neutral-400">
                     <img src={Bars} alt="Menu" className="text-neutral-900 dark:text-white w-5 h-5" />
                 </button>
 
