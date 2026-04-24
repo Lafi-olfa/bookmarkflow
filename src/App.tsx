@@ -4,9 +4,9 @@ import Navbar from "./components/navbar";
 
 function App() {
   return (
-    <div className="min-h-screen bg-neutral-300">
+    <div className="min-h-screen bg-neutral-100">
       <Navbar />
-      <Bookmarks/>
+      <Bookmarks />
     </div>
   );
 }
