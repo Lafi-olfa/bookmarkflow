@@ -14,7 +14,7 @@ export default function Cards() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <div className="mx-4 my-3 max-w-sm rounded-lg p-4 shadow-md dark:bg-teal-600 dark:text-neutral-200">
+    <div className="mx-4 my-3 max-w-sm rounded-lg p-4 shadow-md dark:bg-neutral-800 dark:text-neutral-200">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-3">
