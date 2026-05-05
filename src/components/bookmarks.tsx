@@ -4,8 +4,10 @@ import Cards from "./cards";
 export default function Bookmarks() {
   return (
     <>
-      <BookmarkHeader />
-      <Cards />
+      <div className="dark:bg-[#051513]">
+        <BookmarkHeader />
+        <Cards />
+      </div>
     </>
   );
 }

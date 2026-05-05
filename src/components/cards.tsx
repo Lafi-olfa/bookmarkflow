@@ -7,14 +7,14 @@ import Visit from "../assets/icon-visit.svg";
 import Copy from "../assets/icon-copy.svg";
 import Edit from "../assets/icon-edit.svg";
 import Archive from "../assets/icon-archive.svg";
+import TagItem from "./tag-item";
 
 export default function Cards() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
   return (
-    <div className="mx-4 my-3 max-w-sm rounded-lg p-4 shadow-md dark:bg-neutral-800 dark:text-neutral-200">
+    <div className="mx-4 my-3 max-w-sm rounded-lg p-4 shadow-md dark:bg-[#002E2D]">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-3">
@@ -24,10 +24,10 @@ export default function Cards() {
             alt="logo"
           />
           <div>
-            <p className="text-xl leading-[1.2] text-neutral-900 dark:text-white">
+            <p className="text-xl leading-[1.2] dark:text-white">
               Frontend Mentor
             </p>
-            <p className="py-1 text-xs leading-[1.4] text-gray-800 dark:text-neutral-100">
+            <p className="py-1 text-xs leading-[1.4] dark:text-[#b1b9b9]">
               frontendmentor.io
             </p>
           </div>
@@ -95,7 +95,7 @@ export default function Cards() {
       <hr className="my-3 text-neutral-300" />
 
       {/* Content */}
-      <p className="space-y-1 text-sm leading-normal text-neutral-800 dark:text-neutral-100">
+      <p className="space-y-1 text-sm leading-normal dark:text-[#b1b9b9]">
         Improve your front-end coding skills by building real projects. Solve
         real-world HTML, CSS and JavaScript challenges whilst working to
         professional designs.
@@ -103,15 +103,9 @@ export default function Cards() {
 
       {/* Tags */}
       <div className="mt-3 flex flex-wrap gap-2">
-        <span className="rounded bg-gray-200 px-2 py-1 text-xs leading-[1.4] text-neutral-800 dark:bg-teal-500 dark:text-neutral-100">
-          Practice
-        </span>
-        <span className="rounded bg-gray-200 px-2 py-1 text-xs leading-[1.4] text-neutral-800 dark:bg-teal-500 dark:text-neutral-100">
-          Learning
-        </span>
-        <span className="rounded bg-gray-200 px-2 py-1 text-xs leading-[1.4] text-neutral-800 dark:bg-teal-500 dark:text-neutral-100">
-          Community
-        </span>
+        <TagItem name="Practice" />
+        <TagItem name="Learning" />
+        <TagItem name="Community" />
       </div>
 
       <hr className="-mx-4 my-3 text-neutral-300" />
@@ -125,7 +119,7 @@ export default function Cards() {
               src={VisitCount}
               alt="Visit Count"
             />
-            <span className="dark:text-neutral-100">47</span>
+            <span className="dark:text-[#b1b9b9]">47</span>
           </div>
           <div className="flex items-center gap-1">
             <img
@@ -133,7 +127,7 @@ export default function Cards() {
               src={VisitCount}
               alt=""
             />
-            <span className="dark:text-neutral-100">23 Sep</span>
+            <span className="dark:text-[#b1b9b9]">23 Sep</span>
           </div>
           <div className="flex items-center gap-1">
             <img
@@ -141,14 +135,15 @@ export default function Cards() {
               src={VisitCount}
               alt=""
             />
-            <span className="dark:text-neutral-100">15 Jan</span>
+            <span className="dark:text-[#b1b9b9]">15 Jan</span>
           </div>
         </div>
-        <img
+        {/* <img
           className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
           src={Pin}
           alt="pin"
-        />
+        /> */}
+        <TagItem name="Archived" />
       </div>
     </div>
   );
