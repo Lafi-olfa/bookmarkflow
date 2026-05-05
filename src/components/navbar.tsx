@@ -12,11 +12,11 @@ export default function Navbar() {
 
   return (
     <nav
-      className="flex flex-wrap items-center justify-between gap-2 bg-white px-4 py-3 dark:bg-neutral-800"
+      className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 dark:bg-[#002E2D]"
       style={{ minWidth: "220px" }}
     >
       {/* menu + search */}
-      <div className="flex min-w-0 flex-1 items-center gap-3 dark:bg-sky-800">
+      <div className="flex min-w-0 flex-1 items-center gap-3">
         <button className="inline h-10 w-10 rounded-md border border-neutral-400 bg-white p-2.5 shadow-sm lg:hidden">
           <img
             src={Bars}
@@ -42,7 +42,11 @@ export default function Navbar() {
       {/* add  */}
       <div className="flex items-center gap-3">
         <button className="flex items-center justify-center gap-2 rounded-md bg-teal-700 p-2 text-white shadow-2xs">
-          <img src={Add} alt="Add" className="h-5 w-5 text-amber-50" />
+          <img
+            src={Add}
+            alt="Add"
+            className="h-5 w-5 dark:brightness-0 dark:contrast-100 dark:invert"
+          />
           <span className="hidden md:inline">Add bookmark</span>
         </button>
         <img
@@ -57,7 +61,7 @@ export default function Navbar() {
           <img
             src={theme === "light" ? Mode : Light}
             alt="Add"
-            className="h-5 w-5 text-amber-50"
+            className="h-5 w-5 dark:brightness-0 dark:contrast-100 dark:invert"
           />
         </button>
       </div>
