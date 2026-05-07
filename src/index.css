@@ -1,10 +1,9 @@
 @import "tailwindcss";
-/* stylelint-disable-next-line at-rule-no-unknown */
 @custom-variant dark (&:where(.dark, .dark *));
 
-:is(.dark .dark\:bg-teal-500) {
+/* :is(.dark .dark\:bg-teal-500) {
   background-color: #14b8a6;
-}
+} */
 /* :is(.dark .dark\:bg-neutral-600) {
     background-color: #002E2D;
 }
