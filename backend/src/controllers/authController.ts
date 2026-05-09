@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'; // Import manquant
 import { User } from '../models/user';
 export const signupUser = async (req: Request, res: Response) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { fullName, email, password } = req.body;
 
   try {
     let user = await User.findOne({ email });
@@ -13,13 +13,17 @@ export const signupUser = async (req: Request, res: Response) => {
         .json({ error: 'E-mail address is already registered' });
     }
 
-    user = new User({ firstName, lastName, email, password });
+    user = new User({ fullName, email, password });
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
 
     await user.save();
-    res.status(201).json(user);
+    res.status(201).json({
+      id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+    });
   } catch (error: any) {
     res.status(500).json({ message: error.message || 'Server error' });
   }
@@ -62,7 +66,7 @@ export const loginUser = async (req: Request, res: Response) => {
     const userResponse = {
       id: user._id,
       email: user.email,
-      userName: `${user.firstName} ${user.lastName}`,
+      userName: user.fullName,
     };
 
     // 6. return response

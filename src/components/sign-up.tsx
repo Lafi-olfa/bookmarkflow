@@ -9,12 +9,12 @@ export default function SignUp() {
         {
           fieldName: "Full name *",
           type: "text",
-          name: "text",
+          name: "fullName",
         },
         {
           fieldName: "Email address",
-          type: "text",
-          name: "text",
+          type: "email",
+          name: "email",
         },
         {
           fieldName: "Password",
