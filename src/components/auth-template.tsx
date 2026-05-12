@@ -69,7 +69,7 @@ export default function AuthTemplate({
               fieldName={field.fieldName}
               type={field.type}
               name={field.name}
-              value={formData[field.name]}
+              value={formData?.[field.name] ?? ""}
               onChange={onChange}
             />
           ))}

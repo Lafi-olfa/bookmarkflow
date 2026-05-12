@@ -2,6 +2,9 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'; // Import manquant
 import { User } from '../models/user';
+import { sendResetEmail } from '../utils/mailer';
+import crypto from 'crypto';
+
 export const signupUser = async (req: Request, res: Response) => {
   const { fullName, email, password } = req.body;
 
@@ -80,5 +83,43 @@ export const loginUser = async (req: Request, res: Response) => {
     res.status(500).json({
       message: error.message || 'Erreur serveur',
     });
+  }
+};
+
+export const forgotPassword = async (req: Request, res: Response) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: 'Email required' });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // 1. generate token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    // 2. hash token (security best practice)
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+
+    // 3. save to DB
+
+    await user.save();
+
+    // 4. send email
+    const resetLink = `http://localhost:5173/reset-password?token=${resetToken}`;
+
+    await sendResetEmail(email, resetLink);
+
+    return res.json({ message: 'Reset email sent' });
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error' });
   }
 };
