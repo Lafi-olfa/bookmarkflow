@@ -2,7 +2,6 @@ import LogoDark from "../assets/logo-dark-theme.svg";
 import { useTheme } from "../context/theme-context";
 import LogoLight from "../assets/logo-light-theme.svg";
 import InputField from "./input-field";
-import { useState } from "react";
 
 type FieldsProps = {
   fieldName: string;
@@ -24,55 +23,24 @@ type AuthProps = {
   fields: FieldsProps[];
   buttonTitle: string;
   links: LinkProps[];
+  formData: Record<string, string>;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
-type DataForm = {
-  fullName: string;
-  email: string;
-  password: string;
-};
+
 export default function AuthTemplate({
   title,
   description,
   fields,
   buttonTitle,
   links,
+  formData,
+  onChange,
+  onSubmit,
 }: AuthProps) {
   const { theme } = useTheme();
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-  });
-
-  async function signUp(data: DataForm) {
-    const res = await fetch("http://localhost:5000/api/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!res.ok) {
-      const error = await res.json();
-      throw new Error(error.message || "Signup failed");
-    }
-    return res.json();
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(formData);
-    try {
-      const user = await signUp(formData);
-      console.log("User created:", user);
-    } catch (err) {
-      console.error("Signup error:", err);
-    }
-  };
-
   return (
-    <div className="absolute flex min-h-screen w-full min-w-screen flex-col items-center justify-center gap-8 rounded-xl bg-[#e8f0ef] px-4 py-8">
+    <div className="absolute flex min-h-screen w-full flex-col items-center justify-center gap-8 rounded-xl bg-[#e8f0ef] px-4 py-8">
       <div className="w-full max-w-md rounded-2xl px-2 py-4 dark:bg-[#002E2D]">
         <img
           src={`${theme === "dark" ? LogoDark : LogoLight}`}
@@ -91,7 +59,7 @@ export default function AuthTemplate({
         </div>
 
         <form
-          onSubmit={handleSubmit}
+          onSubmit={onSubmit}
           method="post"
           className="flex flex-col gap-4 px-5"
         >
@@ -101,13 +69,8 @@ export default function AuthTemplate({
               fieldName={field.fieldName}
               type={field.type}
               name={field.name}
-              value={formData[field.name as keyof typeof formData]}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  [field.name]: e.target.value,
-                }))
-              }
+              value={formData[field.name]}
+              onChange={onChange}
             />
           ))}
 

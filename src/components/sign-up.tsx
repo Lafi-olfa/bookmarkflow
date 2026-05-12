@@ -1,6 +1,49 @@
+import { useState } from "react";
 import AuthTemplate from "./auth-template";
-
+type DataForm = {
+  fullName: string;
+  email: string;
+  password: string;
+};
 export default function SignUp() {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  async function signUp(data: DataForm) {
+    const res = await fetch("http://localhost:5000/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Signup failed");
+    }
+    return res.json();
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const user = await signUp(formData);
+      console.log("User created:", user);
+    } catch (err) {
+      console.error("Signup error:", err);
+    }
+  };
   return (
     <AuthTemplate
       title="Create your account"
@@ -30,6 +73,9 @@ export default function SignUp() {
           href: "/sign-in",
         },
       ]}
+      formData={formData}
+      onChange={handleChange}
+      onSubmit={handleSubmit}
     />
   );
 }
