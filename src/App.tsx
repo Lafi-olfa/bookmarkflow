@@ -1,23 +1,24 @@
 import "./App.css";
-// import Bookmarks from "./components/bookmarks";
+import { Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/navbar";
-// import ResetPassword from "./components/reset-passwod";
-// import SignIn from "./components/sign-in";
-// import Sidebar from "./components/sibebar";
 import SignUp from "./components/sign-up";
-// import ForgotPassword from "./components/forgot-password";
+import SignIn from "./components/sign-in";
+import ForgotPassword from "./components/forgot-password";
+import ResetPassword from "./components/reset-passwod";
 
 function App() {
   return (
     <div className="min-h-screen bg-neutral-100">
       <Navbar />
-      <SignUp />
-      {/* <ResetPassword /> */}
-      {/* <SignIn />
-      <SignUp /> 
-      <ForgotPassword />
-       <Sidebar />
-      <Bookmarks /> */}
+
+      <Routes>
+        {/* Auth routes */}
+        <Route path="/" element={<SignUp />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+      </Routes>
     </div>
   );
 }

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import AuthTemplate from "./auth-template";
+import { useNavigate } from "react-router-dom";
 type DataForm = {
   email: string;
   password: string;
 };
 export default function SignIn() {
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -38,6 +40,8 @@ export default function SignIn() {
     e.preventDefault();
     try {
       const user = await signIn(formData);
+      navigate("/bookmarks");
+
       console.log("User connected:", user);
     } catch (err) {
       console.error("Sign-In error:", err);

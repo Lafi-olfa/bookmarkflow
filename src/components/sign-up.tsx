@@ -1,11 +1,13 @@
 import { useState } from "react";
 import AuthTemplate from "./auth-template";
+import { useNavigate } from "react-router-dom";
 type DataForm = {
   fullName: string;
   email: string;
   password: string;
 };
 export default function SignUp() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -39,6 +41,7 @@ export default function SignUp() {
     e.preventDefault();
     try {
       const user = await signUp(formData);
+      navigate("/sign-in");
       console.log("User created:", user);
     } catch (err) {
       console.error("Signup error:", err);
