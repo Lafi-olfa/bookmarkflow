@@ -5,6 +5,8 @@ export interface IUser extends Document {
   fullName: string;
   email: string;
   password: string;
+  resetPasswordToken: String;
+  resetPasswordExpires: Date;
 }
 export const userSchema = new Schema<IUser>({
   fullName: { type: String, required: true },

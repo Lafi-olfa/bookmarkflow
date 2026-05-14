@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'; // Import manquant
 import { User } from '../models/user';
-import { sendResetEmail } from '../utils/mailer';
 import crypto from 'crypto';
+import { sendResetEmail } from '../utils/mailer';
 
 export const signupUser = async (req: Request, res: Response) => {
   const { fullName, email, password } = req.body;
@@ -92,34 +92,26 @@ export const forgotPassword = async (req: Request, res: Response) => {
   if (!email) {
     return res.status(400).json({ error: 'Email required' });
   }
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  // Génération token
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+  user.resetPasswordToken = hashedToken;
+  user.resetPasswordExpires = new Date(Date.now() + 3600000);
+  await user.save();
+
+  const resetLink = `http://localhost:5173/reset-password?token=${resetToken}`;
 
   try {
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    // 1. generate token
-    const resetToken = crypto.randomBytes(32).toString('hex');
-
-    // 2. hash token (security best practice)
-    const hashedToken = crypto
-      .createHash('sha256')
-      .update(resetToken)
-      .digest('hex');
-
-    // 3. save to DB
-
-    await user.save();
-
-    // 4. send email
-    const resetLink = `http://localhost:5173/reset-password?token=${resetToken}`;
-
-    await sendResetEmail(email, resetLink);
-
+    await sendResetEmail(user.email, resetLink);
     return res.json({ message: 'Reset email sent' });
-  } catch (err) {
-    return res.status(500).json({ error: 'Server error' });
+  } catch (emailError) {
+    return res.status(500).json({ error: 'Failed to send email' });
   }
 };

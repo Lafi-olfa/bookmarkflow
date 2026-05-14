@@ -69,12 +69,12 @@ export default function SignIn() {
         {
           question: "Forgot password?",
           action: "Reset it",
-          href: "/reset-password",
+          href: "/forgot-password",
         },
         {
           question: "Don’t have an account?",
           action: "Sign up",
-          href: "/signup",
+          href: "/",
         },
       ]}
       formData={formData}

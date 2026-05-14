@@ -1,12 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import AuthTemplate from "./auth-template";
 import { useState } from "react";
 type DataForm = {
   email: string;
 };
 export default function ForgotPassword() {
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -19,7 +16,7 @@ export default function ForgotPassword() {
   };
 
   async function forgotPassword(data: DataForm) {
-    const res = await fetch("http://localhost:5000/api/auth/forgot-poassword", {
+    const res = await fetch("http://localhost:5000/api/auth/forgot-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,10 +34,7 @@ export default function ForgotPassword() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const user = await forgotPassword(formData);
-      navigate("/reset-password");
-
-      console.log("Link send:", user);
+      await forgotPassword(formData);
     } catch (err) {
       console.error("Sening email error:", err);
     }
