@@ -20,7 +20,7 @@ app.use(
 
 app.use(express.json());
 // routes
-app.use('/api/bookmarks', auth, bookmarkRoutes);
+app.use('/api/bookmarks', bookmarkRoutes);
 
 app.use('/api/bookmarks/:id', auth, bookmarkRoutes);
 

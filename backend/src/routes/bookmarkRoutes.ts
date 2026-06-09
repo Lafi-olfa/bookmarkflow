@@ -2,6 +2,15 @@ import express, { Request, Response } from 'express';
 import { Bookmark } from '../models/bookmark';
 
 const router = express.Router();
+// get all
+router.get('/', async (req: Request, res: Response) => {
+  try {
+    const bookmarks = await Bookmark.find();
+    res.status(200).json(bookmarks);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message || 'Server error' });
+  }
+});
 
 // Add new bookmark
 router.post('/add', async (req: Request, res: Response) => {
