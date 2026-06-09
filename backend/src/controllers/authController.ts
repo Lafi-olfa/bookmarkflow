@@ -115,3 +115,45 @@ export const forgotPassword = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'Failed to send email' });
   }
 };
+
+export const resetPassword = async (req: Request, res: Response) => {
+  try {
+    const { password, token } = req.body;
+
+    if (!password || !token) {
+      return res.status(400).json({
+        error: 'Password and token are required',
+      });
+    }
+
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpires: { $gt: new Date() },
+    });
+
+    console.log('user', user);
+
+    if (!user) {
+      return res.status(400).json({
+        error: 'Invalid or expired token',
+      });
+    }
+
+    user.password = await bcrypt.hash(password, 10);
+
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    await user.save();
+
+    return res.status(200).json({
+      message: 'Password reset successfully',
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Internal server error',
+    });
+  }
+};

@@ -1,4 +1,6 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.ethereal.email',
@@ -13,7 +15,7 @@ const transporter = nodemailer.createTransport({
 export const sendResetEmail = async (to: string, resetLink: string) => {
   try {
     const info = await transporter.sendMail({
-      from: '"Support" <no-reply@example.com>',
+      from: process.env.EMAIL_TRANSPORTER,
       to,
       subject: 'Reset your password',
       html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`,

@@ -36,7 +36,7 @@ export default function ForgotPassword() {
     try {
       await forgotPassword(formData);
     } catch (err) {
-      console.error("Sening email error:", err);
+      console.error("Sending email error:", err);
     }
   };
   return (
