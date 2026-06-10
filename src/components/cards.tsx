@@ -30,9 +30,11 @@ export default function Cards() {
   console.log("bookmarks", bookmarks);
   return (
     <>
-      {bookmarks.map((bookmark, index) => (
-        <Card key={index} bookmark={bookmark} />
-      ))}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {bookmarks.map((bookmark, index) => (
+          <Card key={index} bookmark={bookmark} />
+        ))}
+      </div>
     </>
   );
 }

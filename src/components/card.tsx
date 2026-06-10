@@ -3,10 +3,12 @@ import { useState } from "react";
 import Menu from "../assets/icon-menu-bookmark.svg";
 import VisitCount from "../assets/icon-visit-count.svg";
 import Pin from "../assets/icon-pin.svg";
+import Unpin from "../assets/icon-unpin.svg";
 import Visit from "../assets/icon-visit.svg";
 import Copy from "../assets/icon-copy.svg";
 import Edit from "../assets/icon-edit.svg";
 import Archive from "../assets/icon-archive.svg";
+import Unarchive from "../assets/icon-unarchive.svg";
 import TagItem from "./tag-item";
 
 type BookmarkItem = {
@@ -37,6 +39,8 @@ export default function Card({ bookmark }: CardProps) {
     tags,
     createdAt,
     lastVisited,
+    pinned,
+    isArchived,
   } = bookmark;
   const domain = new URL(url).hostname.replace(/^www\./, "");
 
@@ -44,7 +48,7 @@ export default function Card({ bookmark }: CardProps) {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   return (
-    <div className="mx-4 my-3 max-w-sm rounded-lg p-4 shadow-md dark:bg-[#002E2D]">
+    <div className="mx-4 my-3 h-64 max-w-sm rounded-lg p-4 shadow-md dark:bg-[#002E2D]">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-3">
@@ -74,48 +78,78 @@ export default function Card({ bookmark }: CardProps) {
           </button>
 
           {isMenuOpen && (
-            <div className="absolute right-0 z-50 h-48 w-50 rounded-md border border-teal-500 dark:bg-teal-600">
-              <div className="mx-1 my-1 flex items-center justify-start gap-3 border border-amber-500 px-1 py-1">
-                <img
-                  className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-                  src={Visit}
-                  alt="visit"
-                />
-                <span className="text-sm leading-[1.4]">Visit</span>
+            <>
+              <div className="absolute right-0 z-50 flex h-50 w-50 flex-col items-start gap-1 rounded-lg border border-[#004241] bg-[#002E2D] p-2 shadow-[06px14px0rgba(34,38,39,0.10)]">
+                <div className="flex w-full items-center gap-2.5 rounded-md p-2">
+                  <img
+                    className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
+                    src={Visit}
+                    alt="visit"
+                  />
+                  <p className="font-manrope w-full text-sm leading-[1.4em] font-semibold text-[#B1B9B9]">
+                    Visit
+                  </p>
+                </div>
+                <div className="flex w-46 items-center gap-2.5 rounded-md p-2">
+                  <img
+                    className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
+                    src={Copy}
+                    alt="copy"
+                  />
+                  <p className="font-manrope w-full text-sm leading-[1.4em] font-semibold text-[#B1B9B9]">
+                    Copy URL
+                  </p>
+                </div>
+                <div className="flex w-46 items-center gap-2.5 rounded-md p-2">
+                  {pinned ? (
+                    <img
+                      className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
+                      src={Unpin}
+                      alt="unpin"
+                    />
+                  ) : (
+                    <img
+                      className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
+                      src={Pin}
+                      alt="pin"
+                    />
+                  )}
+
+                  <p className="font-manrope w-full text-sm leading-[1.4em] font-semibold text-[#B1B9B9]">
+                    {pinned ? "Unpin" : "Pin"}
+                  </p>
+                </div>
+                <div className="flex w-46 items-center gap-2.5 rounded-md p-2">
+                  <img
+                    className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
+                    src={Edit}
+                    alt="edit"
+                  />
+                  <p className="font-manrope w-full text-sm leading-[1.4em] font-semibold text-[#B1B9B9]">
+                    Edit
+                  </p>
+                </div>
+                <div className="flex w-46 items-center gap-2.5 rounded-md p-2">
+                  {isArchived ? (
+                    <img
+                      className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
+                      src={Unarchive}
+                      alt="archive"
+                    />
+                  ) : (
+                    <img
+                      className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
+                      src={Archive}
+                      alt="unarchive"
+                    />
+                  )}
+
+                  <p className="font-manrope w-full text-sm leading-[1.4em] font-semibold text-[#B1B9B9]">
+                    {isArchived ? "Unarchive" : "Archive"}
+                  </p>
+                </div>
               </div>
-              <div className="mx-1 my-1 flex items-center justify-start gap-3 border border-amber-500 px-1 py-1">
-                <img
-                  className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-                  src={Copy}
-                  alt="copy"
-                />
-                <span className="text-sm leading-[1.4]">Copy URL</span>
-              </div>
-              <div className="mx-1 my-1 flex items-center justify-start gap-3 border border-amber-500 px-1 py-1">
-                <img
-                  className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-                  src={Pin}
-                  alt="pin"
-                />
-                <span className="text-sm leading-[1.4]">Pin</span>
-              </div>
-              <div className="mx-1 my-1 flex items-center justify-start gap-3 border border-amber-500 px-1 py-1">
-                <img
-                  className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-                  src={Edit}
-                  alt="edit"
-                />
-                <span className="text-sm leading-[1.4]">Edit</span>
-              </div>
-              <div className="mx-1 my-1 flex items-center justify-start gap-3 border border-amber-500 px-1 py-1">
-                <img
-                  className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-                  src={Archive}
-                  alt="archive"
-                />
-                <span className="text-sm leading-[1.4]">Archive</span>
-              </div>
-            </div>
+            </>
           )}
         </div>
       </div>
@@ -178,12 +212,14 @@ export default function Card({ bookmark }: CardProps) {
             </span>
           </div>
         </div>
-        {/* <img
-          className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-          src={Pin}
-          alt="pin"
-        /> */}
-        <TagItem name="Archived" />
+        {pinned && (
+          <img
+            className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
+            src={Pin}
+            alt="pin"
+          />
+        )}
+        {isArchived && <TagItem name="Archived" />}
       </div>
     </div>
   );
