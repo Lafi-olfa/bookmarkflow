@@ -10,8 +10,10 @@ import Edit from "../assets/icon-edit.svg";
 import Archive from "../assets/icon-archive.svg";
 import Unarchive from "../assets/icon-unarchive.svg";
 import TagItem from "./tag-item";
+import Modal from "./modal";
 
 type BookmarkItem = {
+  _id: string;
   title: string;
   url: string;
   favicon: string;
@@ -29,8 +31,8 @@ type CardProps = {
 };
 
 export default function Card({ bookmark }: CardProps) {
-  console.log(bookmark);
   const {
+    _id,
     title,
     favicon,
     url,
@@ -43,12 +45,34 @@ export default function Card({ bookmark }: CardProps) {
     isArchived,
   } = bookmark;
   const domain = new URL(url).hostname.replace(/^www\./, "");
-
+  const modalData = isArchived
+    ? {
+        title: "Unarchive bookmark",
+        description: "Move this bookmark back to your active list?",
+        confirmText: "Unarchive",
+      }
+    : {
+        title: "Archive bookmark",
+        description: "Are you sure you want to archive this bookmark?",
+        confirmText: "Archive",
+      };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isArchiveModalOpen, setIsArchiveModalOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const openArchiveModal = () => {
+     
+    setIsArchiveModalOpen(true);
+    setIsMenuOpen(false); // ferme le menu
+  };
+  // const handleChange = () => {
+  //   setIsArchiveModalOpen((prev) => !prev);
+  // };
+  // console.log(isArchiveModalOpen);
+
   return (
-    <div className="mx-4 my-3 h-64 max-w-sm rounded-lg p-4 shadow-md dark:bg-[#002E2D]">
+    <div className="mx-4 my-3 flex h-64 max-w-sm flex-col rounded-lg p-4 shadow-md dark:bg-[#002E2D]">
+      {" "}
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-3">
@@ -129,7 +153,10 @@ export default function Card({ bookmark }: CardProps) {
                     Edit
                   </p>
                 </div>
-                <div className="flex w-46 items-center gap-2.5 rounded-md p-2">
+                <div
+                  className="flex w-46 cursor-pointer items-center gap-2.5 rounded-md p-2"
+                  onClick={openArchiveModal}
+                >
                   {isArchived ? (
                     <img
                       className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
@@ -151,11 +178,19 @@ export default function Card({ bookmark }: CardProps) {
               </div>
             </>
           )}
+
+          {isArchiveModalOpen && (
+            <Modal
+            id={_id}
+              title={modalData.title}
+              description={modalData.description}
+              confirmText={modalData.confirmText}
+              onClose={() => setIsArchiveModalOpen(false)}
+            />
+          )}
         </div>
       </div>
-
       <hr className="my-3 text-neutral-300" />
-
       {/* Content */}
       <p className="space-y-1 text-sm leading-normal dark:text-[#b1b9b9]">
         {/* Improve your front-end coding skills by building real projects. Solve
@@ -163,63 +198,65 @@ export default function Card({ bookmark }: CardProps) {
         professional designs. */}
         {description}
       </p>
-
       {/* Tags */}
       <div className="mt-3 flex flex-wrap gap-2">
         {tags.map((tag, index) => (
           <TagItem key={index} name={tag} />
         ))}
       </div>
-
-      <hr className="-mx-4 my-3 text-neutral-300" />
-
       {/* Footer */}
-      <div className="flex items-center justify-between text-xs text-gray-600">
-        <div className="flex gap-3">
-          <div className="flex items-center gap-1">
-            <img
-              className="h-3 w-3 dark:brightness-0 dark:contrast-100 dark:invert"
-              src={VisitCount}
-              alt="Visit Count"
-            />
-            <span className="dark:text-[#b1b9b9]">{visitCount}</span>
+      <div className="mt-auto">
+        <hr className="-mx-4 my-3 text-neutral-300" />
+        <div className="flex items-center justify-between text-xs text-gray-600">
+          {" "}
+          <div className="flex gap-3">
+            <div className="flex items-center gap-1">
+              <img
+                className="h-3 w-3 dark:brightness-0 dark:contrast-100 dark:invert"
+                src={VisitCount}
+                alt="Visit Count"
+              />
+              <span className="dark:text-[#b1b9b9]">{visitCount}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <img
+                className="h-3 w-3 dark:brightness-0 dark:contrast-100 dark:invert"
+                src={VisitCount}
+                alt=""
+              />
+              <span className="dark:text-[#b1b9b9]">
+                {!lastVisited
+                  ? "Never"
+                  : new Date(lastVisited).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "short",
+                    })}
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <img
+                className="h-3 w-3 dark:brightness-0 dark:contrast-100 dark:invert"
+                src={VisitCount}
+                alt=""
+              />
+              <span className="dark:text-[#b1b9b9]">
+                {" "}
+                {new Date(createdAt).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "short",
+                })}
+              </span>
+            </div>
           </div>
-          <div className="flex items-center gap-1">
+          {pinned && (
             <img
-              className="h-3 w-3 dark:brightness-0 dark:contrast-100 dark:invert"
-              src={VisitCount}
-              alt=""
+              className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
+              src={Pin}
+              alt="pin"
             />
-            <span className="dark:text-[#b1b9b9]">
-              {new Date(lastVisited).toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "short",
-              })}
-            </span>
-          </div>
-          <div className="flex items-center gap-1">
-            <img
-              className="h-3 w-3 dark:brightness-0 dark:contrast-100 dark:invert"
-              src={VisitCount}
-              alt=""
-            />
-            <span className="dark:text-[#b1b9b9]">
-              {" "}
-              {new Date(createdAt).toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "short",
-              })}
-            </span>
-          </div>
+          )}
+          {isArchived && <TagItem name="Archived" />}
         </div>
-        {pinned && (
-          <img
-            className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-            src={Pin}
-            alt="pin"
-          />
-        )}
-        {isArchived && <TagItem name="Archived" />}
       </div>
     </div>
   );

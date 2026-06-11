@@ -27,10 +27,9 @@ export default function Cards() {
 
     void fetchBookmarks();
   }, []);
-  console.log("bookmarks", bookmarks);
   return (
     <>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {bookmarks.map((bookmark, index) => (
           <Card key={index} bookmark={bookmark} />
         ))}
