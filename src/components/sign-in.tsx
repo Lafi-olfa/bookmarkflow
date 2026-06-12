@@ -33,7 +33,10 @@ export default function SignIn() {
       const error = await res.json();
       throw new Error(error.message || "Signup failed");
     }
-    return res.json();
+    const result = await res.json();
+    localStorage.setItem("token", result.token);
+
+    return result;
   }
 
   const handleSubmit = async (e: React.FormEvent) => {

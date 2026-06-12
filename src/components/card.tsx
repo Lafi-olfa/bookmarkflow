@@ -28,9 +28,10 @@ type BookmarkItem = {
 
 type CardProps = {
   bookmark: BookmarkItem;
+  onArchive: (id: string, isArchived: boolean) => void;
 };
 
-export default function Card({ bookmark }: CardProps) {
+export default function Card({ bookmark, onArchive }: CardProps) {
   const {
     _id,
     title,
@@ -61,14 +62,9 @@ export default function Card({ bookmark }: CardProps) {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const openArchiveModal = () => {
-     
     setIsArchiveModalOpen(true);
-    setIsMenuOpen(false); // ferme le menu
+    setIsMenuOpen(false);
   };
-  // const handleChange = () => {
-  //   setIsArchiveModalOpen((prev) => !prev);
-  // };
-  // console.log(isArchiveModalOpen);
 
   return (
     <div className="mx-4 my-3 flex h-64 max-w-sm flex-col rounded-lg p-4 shadow-md dark:bg-[#002E2D]">
@@ -181,11 +177,15 @@ export default function Card({ bookmark }: CardProps) {
 
           {isArchiveModalOpen && (
             <Modal
-            id={_id}
+              id={_id}
               title={modalData.title}
               description={modalData.description}
               confirmText={modalData.confirmText}
               onClose={() => setIsArchiveModalOpen(false)}
+              onConfirm={async () => {
+                await onArchive(_id, isArchived);
+                setIsArchiveModalOpen(false);
+              }}
             />
           )}
         </div>

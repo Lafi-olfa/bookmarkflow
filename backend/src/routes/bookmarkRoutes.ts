@@ -84,6 +84,7 @@ router.get('/', async (req: Request, res: Response) => {
 router.get('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+
     const bookmark = await Bookmark.findOne({ _id: id });
     res.status(200).json(bookmark);
   } catch (error: any) {
@@ -92,10 +93,10 @@ router.get('/:id', async (req: Request, res: Response) => {
 });
 
 //find and update
-router.post('/:id', async (req: Request, res: Response) => {
+router.patch('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    console.log(req.query);
+
     const $set: any = {};
     const {
       title,
@@ -126,7 +127,7 @@ router.post('/:id', async (req: Request, res: Response) => {
     if (pinned) {
       $set.pinned = pinned;
     }
-    if (isArchived) {
+    if (isArchived !== undefined) {
       $set.isArchived = isArchived;
     }
     if (visitCount) {
