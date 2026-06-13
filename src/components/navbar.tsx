@@ -5,10 +5,12 @@ import Avatar from "../assets/image-avatar.webp";
 import Mode from "../assets/icon-dark-theme.svg";
 import Light from "../assets/icon-light-theme.svg";
 import { useTheme } from "../context/theme-context";
+import { useState } from "react";
+import AddBookmark from "./add-bookmark";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
-  console.log(theme);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   return (
     <nav
@@ -41,7 +43,10 @@ export default function Navbar() {
 
       {/* add  */}
       <div className="flex items-center gap-3">
-        <button className="flex items-center justify-center gap-2 rounded-md bg-teal-700 p-2 text-white shadow-2xs">
+        <button
+          onClick={() => setIsAddModalOpen(true)}
+          className="flex cursor-pointer items-center justify-center gap-2 rounded-md bg-teal-700 p-2 text-white shadow-2xs"
+        >
           <img
             src={Add}
             alt="Add"
@@ -49,6 +54,12 @@ export default function Navbar() {
           />
           <span className="hidden md:inline">Add bookmark</span>
         </button>
+        {/* {isAddModalOpen && (
+        <AddBookmark/>
+        )} */}
+        {isAddModalOpen && (
+          <AddBookmark onClose={() => setIsAddModalOpen(false)} />
+        )}
         <img
           src={Avatar}
           alt="User avatar"

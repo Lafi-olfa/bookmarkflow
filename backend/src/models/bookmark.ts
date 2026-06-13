@@ -17,14 +17,14 @@ export interface IBookmark extends Document {
 const bookmarkSchema = new Schema<IBookmark>({
   title: { type: String, required: true },
   url: { type: String, required: true },
-  favicon: { type: String, required: true },
+  favicon: { type: String, required: false, default: '' },
   description: { type: String, required: true },
   tags: { type: [String], required: true },
-  pinned: { type: Boolean, required: true },
-  isArchived: { type: Boolean, required: true },
-  visitCount: { type: Number, required: true },
-  createdAt: { type: String, required: true },
-  lastVisited: { type: String, required: true },
+  pinned: { type: Boolean, default: false },
+  isArchived: { type: Boolean, default: false },
+  visitCount: { type: Number, required: false, default: null },
+  createdAt: { type: String },
+  lastVisited: { type: String, default: null },
 });
 
 // model from schema

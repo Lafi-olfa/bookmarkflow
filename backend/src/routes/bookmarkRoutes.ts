@@ -17,29 +17,33 @@ router.post('/add', async (req: Request, res: Response) => {
   try {
     const {
       title,
-      url,
-      favicon,
+      websiteUrl,
+      // favicon,
       description,
       tags,
-      pinned,
-      isArchived,
-      visitCount,
-      createdAt,
-      lastVisited,
+      // pinned,
+      // isArchived,
+      // visitCount,
+      // lastVisited,
     } = req.body;
+
+    const createdAt = new Date().toISOString();
+    const lastVisited = new Date().toISOString();
+    console.log('TEST', req.body);
 
     const newBookmark = new Bookmark({
       title,
-      url,
-      favicon,
+      url: websiteUrl,
+      favicon: null,
       description,
       tags,
-      pinned,
-      isArchived,
-      visitCount,
+      pinned: false,
+      isArchived: false,
+      visitCount: null,
       createdAt,
       lastVisited,
     });
+
     await newBookmark.save();
 
     res.status(201).json(newBookmark);
