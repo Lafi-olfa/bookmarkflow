@@ -15,7 +15,10 @@ type Bookmark = {
   lastVisited: string;
 };
 
-export default function Cards() {
+type CardsProps = {
+  sortByDate: boolean;
+};
+export default function Cards({ sortByDate }: CardsProps) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const token = localStorage.getItem("token");
 
@@ -49,12 +52,22 @@ export default function Cards() {
 
   useEffect(() => {
     void fetchBookmarks();
+    window.addEventListener("bookmark-added", fetchBookmarks);
+    return () => window.removeEventListener("bookmark-added", fetchBookmarks);
   }, []);
+
+  const sortedBookmarks = sortByDate
+    ? [...bookmarks].sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+      )
+    : bookmarks;
+  console.log(sortedBookmarks);
 
   return (
     <>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {bookmarks.map((bookmark) => (
+        {sortedBookmarks.map((bookmark) => (
           <Card
             key={bookmark._id}
             bookmark={bookmark}
