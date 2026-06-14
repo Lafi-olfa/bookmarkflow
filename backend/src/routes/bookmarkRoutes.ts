@@ -39,9 +39,9 @@ router.post('/add', async (req: Request, res: Response) => {
       tags,
       pinned: false,
       isArchived: false,
-      visitCount: null,
-      createdAt,
-      lastVisited,
+      visitCount: 0,
+      createdAt: new Date().toISOString(),
+      lastVisited: new Date().toISOString(),
     });
 
     await newBookmark.save();
