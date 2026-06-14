@@ -59,6 +59,7 @@ export default function Cards() {
             key={bookmark._id}
             bookmark={bookmark}
             onArchive={handleArchive}
+            fetchBookmarks={fetchBookmarks}
           />
         ))}
       </div>

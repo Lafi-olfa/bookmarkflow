@@ -11,6 +11,7 @@ import Archive from "../assets/icon-archive.svg";
 import Unarchive from "../assets/icon-unarchive.svg";
 import TagItem from "./tag-item";
 import Modal from "./modal";
+import EditBookmark from "./edit-bookmark";
 
 type BookmarkItem = {
   _id: string;
@@ -29,9 +30,14 @@ type BookmarkItem = {
 type CardProps = {
   bookmark: BookmarkItem;
   onArchive: (id: string, isArchived: boolean) => void;
+  fetchBookmarks: () => void;
 };
 
-export default function Card({ bookmark, onArchive }: CardProps) {
+export default function Card({
+  bookmark,
+  onArchive,
+  fetchBookmarks,
+}: CardProps) {
   const {
     _id,
     title,
@@ -65,6 +71,7 @@ export default function Card({ bookmark, onArchive }: CardProps) {
     setIsArchiveModalOpen(true);
     setIsMenuOpen(false);
   };
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   return (
     <div className="mx-4 my-3 flex h-64 max-w-sm flex-col rounded-lg p-4 shadow-md dark:bg-[#002E2D]">
@@ -139,7 +146,10 @@ export default function Card({ bookmark, onArchive }: CardProps) {
                     {pinned ? "Unpin" : "Pin"}
                   </p>
                 </div>
-                <div className="flex w-46 items-center gap-2.5 rounded-md p-2">
+                <div
+                  onClick={() => setIsEditModalOpen(true)}
+                  className="flex w-46 cursor-pointer items-center gap-2.5 rounded-md p-2"
+                >
                   <img
                     className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
                     src={Edit}
@@ -149,6 +159,13 @@ export default function Card({ bookmark, onArchive }: CardProps) {
                     Edit
                   </p>
                 </div>
+                {isEditModalOpen && (
+                  <EditBookmark
+                    bookmark={bookmark}
+                    onClose={() => setIsEditModalOpen(false)}
+                    onUpdate={fetchBookmarks}
+                  />
+                )}
                 <div
                   className="flex w-46 cursor-pointer items-center gap-2.5 rounded-md p-2"
                   onClick={openArchiveModal}

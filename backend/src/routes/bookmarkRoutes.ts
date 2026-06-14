@@ -113,6 +113,16 @@ router.patch('/:id', async (req: Request, res: Response) => {
       visitCount,
       lastVisited,
     } = req.body;
+    const existBookmark = await Bookmark.findOne({ _id: id });
+    if (!existBookmark) {
+      return;
+    }
+    if (
+      existBookmark.title == title ||
+      existBookmark.url == url ||
+      existBookmark.description == description
+    )
+      return;
     if (title) {
       $set.title = title;
     }
@@ -140,7 +150,6 @@ router.patch('/:id', async (req: Request, res: Response) => {
     if (lastVisited) {
       $set.lastVisited = lastVisited;
     }
-    console.log('test ic ');
 
     const bookmark = await Bookmark.updateOne({ _id: id }, $set);
     res.status(200).json(bookmark);
