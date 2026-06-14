@@ -76,7 +76,7 @@ export default function EditBookmark({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <AuthTemplate
         title="Edit Bookmark"
-        description="Update your bookmark details."
+        description="Update your saved link details — change the title, description, URL, or tags anytime."
         fields={[
           { fieldName: "Title *", type: "text", name: "title" },
           { fieldName: "Description *", type: "text", name: "description" },
