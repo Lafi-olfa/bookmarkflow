@@ -72,6 +72,12 @@ export default function Card({
     setIsMenuOpen(false);
   };
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 5000);
+  };
 
   return (
     <div className="mx-4 my-3 flex h-64 max-w-sm flex-col rounded-lg p-4 shadow-md dark:bg-[#002E2D]">
@@ -117,14 +123,17 @@ export default function Card({
                     Visit
                   </p>
                 </div>
-                <div className="flex w-46 items-center gap-2.5 rounded-md p-2">
+                <div
+                  onClick={handleCopy}
+                  className="flex w-46 cursor-pointer items-center gap-2.5 rounded-md p-2"
+                >
                   <img
                     className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
                     src={Copy}
                     alt="copy"
                   />
                   <p className="font-manrope w-full text-sm leading-[1.4em] font-semibold text-[#B1B9B9]">
-                    Copy URL
+                    {copied ? "Copied!" : "Copy URL"}
                   </p>
                 </div>
                 <div className="flex w-46 items-center gap-2.5 rounded-md p-2">
