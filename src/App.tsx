@@ -8,26 +8,55 @@ import ForgotPassword from "./components/forgot-password";
 import ResetPassword from "./components/reset-passwod";
 import Bookmarks from "./components/bookmarks";
 import { useState } from "react";
+import Sidebar from "./components/sibebar";
 // import ProtectedRoute from "./components/protected-route";
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
-    <div className="min-h-screen bg-neutral-100">
-      <Navbar searchQuery={searchQuery} onSearch={setSearchQuery} />
+    <div className="min-h-screen bg-neutral-100 dark:bg-[#051513]">
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="hidden min-h-screen w-64 lg:block dark:bg-[#002E2D]">
+          <Sidebar />
+        </aside>
 
-      <Routes>
-        {/* Auth routes */}
-        <Route path="/" element={<SignUp />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route
-          path="/bookmarks"
-          element={<Bookmarks searchQuery={searchQuery} />}
-        />
-      </Routes>
+        {/*navbar + content */}
+        <div className="flex flex-1 flex-col">
+          <Navbar
+            onMenuClick={() => setIsSidebarOpen(true)}
+            searchQuery={searchQuery}
+            onSearch={setSearchQuery}
+          />
+
+          <main>
+            <Routes>
+              <Route path="/" element={<SignUp />} />
+              <Route path="/sign-in" element={<SignIn />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route
+                path="/bookmarks"
+                element={<Bookmarks searchQuery={searchQuery} />}
+              />
+            </Routes>
+          </main>
+        </div>
+      </div>
+
+      {/* Mobile sidebar overlay */}
+      {isSidebarOpen && (
+        <div className="fixed inset-0 z-50 flex lg:hidden">
+          <aside className="min-h-screen w-64 dark:bg-[#002E2D]">
+            <Sidebar onClose={() => setIsSidebarOpen(false)} />
+          </aside>
+          <div
+            className="flex-1 bg-black/50"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        </div>
+      )}
     </div>
   );
 }

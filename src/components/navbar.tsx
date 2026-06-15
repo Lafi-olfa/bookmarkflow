@@ -10,10 +10,14 @@ import AddBookmark from "./add-bookmark";
 type NavbarProps = {
   searchQuery: string;
   onSearch: (value: string) => void;
-  onMenuClick:() => void;
+  onMenuClick: () => void;
 };
 
-export default function Navbar({ searchQuery, onSearch , onMenuClick}: NavbarProps) {
+export default function Navbar({
+  searchQuery,
+  onSearch,
+  onMenuClick,
+}: NavbarProps) {
   const { theme, toggleTheme } = useTheme();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
@@ -24,9 +28,10 @@ export default function Navbar({ searchQuery, onSearch , onMenuClick}: NavbarPro
     >
       {/* menu + search */}
       <div className="flex min-w-0 flex-1 items-center gap-3">
-        <button 
-        onClick={onMenuClick} 
-        className="inline h-10 w-10 rounded-md border border-neutral-400 bg-white p-2.5 shadow-sm lg:hidden">
+        <button
+          onClick={onMenuClick}
+          className="inline h-10 w-10 rounded-md border border-neutral-400 bg-white p-2.5 shadow-sm lg:hidden"
+        >
           <img
             src={Bars}
             alt="Menu"

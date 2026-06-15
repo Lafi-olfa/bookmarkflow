@@ -6,15 +6,19 @@ import Close from "../assets/icon-close.svg";
 import LogoLight from "../assets/logo-light-theme.svg";
 import { useTheme } from "../context/theme-context";
 import Checktem from "./check-item";
-export default function Sidebar() {
+type SidebarProps = {
+  onClose?: () => void;
+};
+export default function Sidebar({ onClose }: SidebarProps) {
   const { theme } = useTheme();
+
   return (
-    <div className="relative h-96 w-72 px-4 py-3 dark:bg-[#002E2D]">
-      <button className="absolute top-1 right-1 h-4 w-4">
+    <div className="relative h-96 w-64 px-4 py-3 dark:bg-[#002E2D]">
+      <button onClick={onClose} className="absolute top-1 right-1 h-4 w-4">
         <img
           src={Close}
           alt="Menu"
-          className="h-5 w-5 dark:brightness-0 dark:contrast-100 dark:invert"
+          className="block h-5 w-5 lg:hidden dark:brightness-0 dark:contrast-100 dark:invert"
         />
       </button>
 
