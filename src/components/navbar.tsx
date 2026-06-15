@@ -7,8 +7,13 @@ import Light from "../assets/icon-light-theme.svg";
 import { useTheme } from "../context/theme-context";
 import { useState } from "react";
 import AddBookmark from "./add-bookmark";
+type NavbarProps = {
+  searchQuery: string;
+  onSearch: (value: string) => void;
+  onMenuClick:() => void;
+};
 
-export default function Navbar() {
+export default function Navbar({ searchQuery, onSearch , onMenuClick}: NavbarProps) {
   const { theme, toggleTheme } = useTheme();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
@@ -19,7 +24,9 @@ export default function Navbar() {
     >
       {/* menu + search */}
       <div className="flex min-w-0 flex-1 items-center gap-3">
-        <button className="inline h-10 w-10 rounded-md border border-neutral-400 bg-white p-2.5 shadow-sm lg:hidden">
+        <button 
+        onClick={onMenuClick} 
+        className="inline h-10 w-10 rounded-md border border-neutral-400 bg-white p-2.5 shadow-sm lg:hidden">
           <img
             src={Bars}
             alt="Menu"
@@ -33,8 +40,11 @@ export default function Navbar() {
             alt="Search"
             className="h-5 w-5 text-neutral-800 opacity-60"
           />
+
           <input
             type="text"
+            value={searchQuery}
+            onChange={(e) => onSearch(e.target.value)}
             placeholder="Search by title..."
             className="w-full bg-transparent text-sm text-neutral-800 outline-none"
           />

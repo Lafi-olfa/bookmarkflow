@@ -2,7 +2,7 @@ import { useState } from "react";
 import BookmarkHeader from "./bookmark-header";
 import Cards from "./cards";
 
-export default function Bookmarks() {
+export default function Bookmarks({ searchQuery }: { searchQuery: string }) {
   const [sortByDate, setSortByDate] = useState(false);
 
   return (
@@ -11,7 +11,7 @@ export default function Bookmarks() {
         sortByDate={sortByDate}
         onSort={() => setSortByDate((prev) => !prev)}
       />
-      <Cards sortByDate={sortByDate} />
+      <Cards searchQuery={searchQuery} sortByDate={sortByDate} />
     </div>
   );
 }

@@ -17,8 +17,9 @@ type Bookmark = {
 
 type CardsProps = {
   sortByDate: boolean;
+  searchQuery: string;
 };
-export default function Cards({ sortByDate }: CardsProps) {
+export default function Cards({ sortByDate, searchQuery }: CardsProps) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const token = localStorage.getItem("token");
 
@@ -56,17 +57,22 @@ export default function Cards({ sortByDate }: CardsProps) {
     return () => window.removeEventListener("bookmark-added", fetchBookmarks);
   }, []);
 
+  const filteredBookmarks = searchQuery
+    ? bookmarks.filter((b) =>
+        b.title.toLowerCase().includes(searchQuery.toLowerCase()),
+      )
+    : bookmarks;
+
   const sortedBookmarks = sortByDate
-    ? [...bookmarks].sort(
+    ? [...filteredBookmarks].sort(
         (a, b) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
       )
-    : bookmarks;
-  console.log(sortedBookmarks);
+    : filteredBookmarks;
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {sortedBookmarks.map((bookmark) => (
           <Card
             key={bookmark._id}
