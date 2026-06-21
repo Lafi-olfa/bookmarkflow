@@ -29,7 +29,6 @@ router.post('/add', async (req: Request, res: Response) => {
 
     const createdAt = new Date().toISOString();
     const lastVisited = new Date().toISOString();
-    console.log('TEST', req.body);
 
     const newBookmark = new Bookmark({
       title,
@@ -161,10 +160,8 @@ router.patch('/:id', async (req: Request, res: Response) => {
 router.post('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    console.log('id', id);
 
     const archivedBookmarks = await Bookmark.deleteOne({ _id: id });
-    console.log('archivedBookmarks', archivedBookmarks);
 
     res.status(200).json(archivedBookmarks);
   } catch (error: any) {

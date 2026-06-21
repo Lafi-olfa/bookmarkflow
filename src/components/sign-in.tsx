@@ -42,10 +42,8 @@ export default function SignIn() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const user = await signIn(formData);
+      await signIn(formData);
       navigate("/bookmarks");
-
-      console.log("User connected:", user);
     } catch (err) {
       console.error("Sign-In error:", err);
     }

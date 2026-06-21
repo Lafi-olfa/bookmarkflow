@@ -40,9 +40,8 @@ export default function SignUp() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const user = await signUp(formData);
+      await signUp(formData);
       navigate("/sign-in");
-      console.log("User created:", user);
     } catch (err) {
       console.error("Signup error:", err);
     }

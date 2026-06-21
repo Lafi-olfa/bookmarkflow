@@ -80,7 +80,7 @@ export default function Card({
   };
 
   return (
-    <div className="mx-4 my-3 flex h-64 max-w-sm flex-col rounded-lg p-4 shadow-md dark:bg-[#002E2D]">
+    <div className="mx-4 my-3 flex h-auto w-auto max-w-sm flex-col rounded-lg p-4 shadow-md dark:bg-[#002E2D]">
       {" "}
       {/* Header */}
       <div className="flex items-start justify-between">
@@ -112,6 +112,7 @@ export default function Card({
 
           {isMenuOpen && (
             <>
+              {/* background color fix  */}
               <div className="absolute right-0 z-50 flex h-50 w-50 flex-col items-start gap-1 rounded-lg border border-[#004241] bg-[#002E2D] p-2 shadow-[06px14px0rgba(34,38,39,0.10)]">
                 <div className="flex w-full items-center gap-2.5 rounded-md p-2">
                   <img

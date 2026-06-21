@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "./card";
 
-type Bookmark = {
+export type Bookmark = {
   _id: string;
   title: string;
   url: string;
@@ -18,8 +18,13 @@ type Bookmark = {
 type CardsProps = {
   sortByDate: boolean;
   searchQuery: string;
+  selectedTags: string[];
 };
-export default function Cards({ sortByDate, searchQuery }: CardsProps) {
+export default function Cards({
+  sortByDate,
+  searchQuery,
+  selectedTags,
+}: CardsProps) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const token = localStorage.getItem("token");
 
@@ -57,11 +62,17 @@ export default function Cards({ sortByDate, searchQuery }: CardsProps) {
     return () => window.removeEventListener("bookmark-added", fetchBookmarks);
   }, []);
 
-  const filteredBookmarks = searchQuery
-    ? bookmarks.filter((b) =>
-        b.title.toLowerCase().includes(searchQuery.toLowerCase()),
-      )
-    : bookmarks;
+  const filteredBookmarks = bookmarks
+    .filter((b) =>
+      searchQuery
+        ? b.title.toLowerCase().includes(searchQuery.toLowerCase())
+        : true,
+    )
+    .filter((b) =>
+      selectedTags.length > 0
+        ? selectedTags.every((tag) => b.tags.includes(tag))
+        : true,
+    );
 
   const sortedBookmarks = sortByDate
     ? [...filteredBookmarks].sort(

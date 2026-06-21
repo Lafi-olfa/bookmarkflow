@@ -20,7 +20,6 @@ export default function AddBookmark({ onClose }: { onClose: () => void }) {
       [e.target.name]: e.target.value,
     }));
   };
-  console.log(formData);
 
   async function addNewBookmark(data: DataForm) {
     const res = await fetch("http://localhost:5000/api/bookmarks/add", {

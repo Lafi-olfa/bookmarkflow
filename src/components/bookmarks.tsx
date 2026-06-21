@@ -2,16 +2,26 @@ import { useState } from "react";
 import BookmarkHeader from "./bookmark-header";
 import Cards from "./cards";
 
-export default function Bookmarks({ searchQuery }: { searchQuery: string }) {
+export default function Bookmarks({
+  searchQuery,
+  selectedTags,
+}: {
+  searchQuery: string;
+  selectedTags: string[];
+}) {
   const [sortByDate, setSortByDate] = useState(false);
 
   return (
-    <div className="dark:bg-[#051513]">
+    <div>
       <BookmarkHeader
         sortByDate={sortByDate}
         onSort={() => setSortByDate((prev) => !prev)}
       />
-      <Cards searchQuery={searchQuery} sortByDate={sortByDate} />
+      <Cards
+        searchQuery={searchQuery}
+        sortByDate={sortByDate}
+        selectedTags={selectedTags}
+      />
     </div>
   );
 }

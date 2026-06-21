@@ -14,23 +14,35 @@ import Sidebar from "./components/sibebar";
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const handleTagToggle = (tag: string) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+    );
+  };
+
   return (
-    <div className="min-h-screen bg-neutral-100 dark:bg-[#051513]">
-      <div className="flex">
+    <div className="min-h-screen dark:bg-[#051513]">
+      <div className="flex min-h-screen">
         {/* Sidebar */}
         <aside className="hidden min-h-screen w-64 lg:block dark:bg-[#002E2D]">
-          <Sidebar />
+          <Sidebar
+            selectedTags={selectedTags}
+            onTagToggle={handleTagToggle}
+            onClose={() => setIsSidebarOpen(false)}
+          />
         </aside>
 
         {/*navbar + content */}
-        <div className="flex flex-1 flex-col">
+        <div className="flex min-h-screen flex-1 flex-col">
           <Navbar
             onMenuClick={() => setIsSidebarOpen(true)}
             searchQuery={searchQuery}
             onSearch={setSearchQuery}
           />
 
-          <main>
+          <main className="min-h-screen dark:bg-[#051513]">
             <Routes>
               <Route path="/" element={<SignUp />} />
               <Route path="/sign-in" element={<SignIn />} />
@@ -38,7 +50,12 @@ function App() {
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route
                 path="/bookmarks"
-                element={<Bookmarks searchQuery={searchQuery} />}
+                element={
+                  <Bookmarks
+                    searchQuery={searchQuery}
+                    selectedTags={selectedTags}
+                  />
+                }
               />
             </Routes>
           </main>
@@ -49,7 +66,11 @@ function App() {
       {isSidebarOpen && (
         <div className="fixed inset-0 z-50 flex lg:hidden">
           <aside className="min-h-screen w-64 dark:bg-[#002E2D]">
-            <Sidebar onClose={() => setIsSidebarOpen(false)} />
+            <Sidebar
+              selectedTags={selectedTags}
+              onTagToggle={handleTagToggle}
+              onClose={() => setIsSidebarOpen(false)}
+            />
           </aside>
           <div
             className="flex-1 bg-black/50"
