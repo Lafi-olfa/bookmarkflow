@@ -82,7 +82,7 @@ export default function Navbar({
         <div className="relative">
           <button
             onClick={toggleMenu}
-            className="cursor-pointer rounded-md border border-neutral-400 p-0.5"
+            className="cursor-pointer rounded-md border-none p-0.5"
           >
             <img
               src={Avatar}
@@ -177,16 +177,7 @@ export default function Navbar({
           )}
         </div>
 
-        <button
-          onClick={toggleTheme}
-          className="flex items-center justify-center gap-2 rounded-md p-2 text-white shadow-2xs"
-        >
-          <img
-            src={theme === "light" ? Mode : Light}
-            alt="Add"
-            className="h-5 w-5 dark:brightness-0 dark:contrast-100 dark:invert"
-          />
-        </button>
+  
       </div>
     </nav>
   );
