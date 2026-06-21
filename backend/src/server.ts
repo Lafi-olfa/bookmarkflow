@@ -12,9 +12,12 @@ connectDB();
 const app: Application = express();
 app.use(
   cors({
-    origin: process.env.FORM_PORT || 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: [
+      "http://localhost:5173",
+      "https://bookmarkflow-1922.vercel.app", // 👈 URL exacte
+    ],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
