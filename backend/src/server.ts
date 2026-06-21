@@ -14,7 +14,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://bookmarkflow-1922.vercel.app", // 👈 URL exacte
+      "https://bookmarkflow-1922.vercel.app",
+      "https://bookmarkflow-production.up.railway.app",
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
