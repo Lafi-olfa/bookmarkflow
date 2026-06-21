@@ -27,7 +27,6 @@ export default function Navbar({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   return (
     <nav
@@ -73,13 +72,10 @@ export default function Navbar({
           <img
             src={Add}
             alt="Add"
-            className="h-5 w-5 dark:brightness-0 dark:contrast-100 dark:invert"
+            className="w- h-5 dark:brightness-0 dark:contrast-100 dark:invert"
           />
           <span className="hidden md:inline">Add bookmark</span>
         </button>
-        {/* {isAddModalOpen && (
-        <AddBookmark/>
-        )} */}
         {isAddModalOpen && (
           <AddBookmark onClose={() => setIsAddModalOpen(false)} />
         )}

@@ -27,11 +27,14 @@ export default function Cards({
 }: CardsProps) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const token = localStorage.getItem("token");
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchBookmarks = async () => {
+    setIsLoading(true);
     const res = await fetch("http://localhost:5000/api/bookmarks");
     const data = await res.json();
     setBookmarks(data);
+    setIsLoading(false);
   };
 
   const handleArchive = async (id: string, isArchived: boolean) => {
@@ -83,16 +86,22 @@ export default function Cards({
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {sortedBookmarks.map((bookmark) => (
-          <Card
-            key={bookmark._id}
-            bookmark={bookmark}
-            onArchive={handleArchive}
-            fetchBookmarks={fetchBookmarks}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <p className="dark:text-white">Loading...</p>
+      ) : sortedBookmarks.length > 0 ? (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {sortedBookmarks.map((bookmark) => (
+            <Card
+              key={bookmark._id}
+              bookmark={bookmark}
+              onArchive={handleArchive}
+              fetchBookmarks={fetchBookmarks}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="dark:text-white">No bookmarks found</p>
+      )}
     </>
   );
 }

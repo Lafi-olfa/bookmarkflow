@@ -20,15 +20,18 @@ export default function Sidebar({
 }: SidebarProps) {
   const { theme } = useTheme();
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
 
     const loadBookmarks = async () => {
+      setIsLoading(true);
       const res = await fetch("http://localhost:5000/api/bookmarks");
       const data = await res.json();
       if (isMounted) {
         setBookmarks(data);
+        setIsLoading(false);
       }
     };
 
@@ -83,17 +86,23 @@ export default function Sidebar({
       <span className="px-2 py-1 text-base leading-[1.4] dark:text-neutral-100">
         TAGS
       </span>
-      <div className="flex flex-col gap-2">
-        {Object.entries(tagCounts).map(([tag, count]) => (
-          <Checktem
-            key={tag}
-            name={tag}
-            count={String(count)}
-            checked={selectedTags.includes(tag)}
-            onChange={() => onTagToggle(tag)}
-          />
-        ))}
-      </div>{" "}
+      {isLoading ? (
+        <p className="px-2 py-1 text-sm dark:text-neutral-100">
+          Loading tags...
+        </p>
+      ) : (
+        <div className="flex flex-col gap-2">
+          {Object.entries(tagCounts).map(([tag, count]) => (
+            <Checktem
+              key={tag}
+              name={tag}
+              count={String(count)}
+              checked={selectedTags.includes(tag)}
+              onChange={() => onTagToggle(tag)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

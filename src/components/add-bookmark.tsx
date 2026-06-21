@@ -52,7 +52,6 @@ export default function AddBookmark({ onClose }: { onClose: () => void }) {
     }
   };
   return (
-    // <div className="absolute flex min-h-screen w-full flex-col items-center justify-center gap-8 rounded-xl bg-[#e8f0ef] px-4 py-8">
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <AuthTemplate
         title="Add a Bookmark"
@@ -81,12 +80,6 @@ export default function AddBookmark({ onClose }: { onClose: () => void }) {
           },
         ]}
         buttonTitle="Add Bookmark"
-        // links={[
-        //   {
-        //     action: "Back to login",
-        //     href: "/sign-in",
-        //   },
-        // ]}
         formData={formData}
         onChange={handleChange}
         onSubmit={handleSubmit}

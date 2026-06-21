@@ -80,7 +80,7 @@ export default function Card({
     setCopied(true);
     setTimeout(() => setCopied(false), 5000);
   };
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <div className="mx-4 my-3 flex h-auto w-auto max-w-sm flex-col rounded-lg p-4 shadow-md dark:bg-[#002E2D]">
