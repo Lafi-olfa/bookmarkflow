@@ -4,9 +4,12 @@ import Add from "../assets/icon-add.svg";
 import Avatar from "../assets/image-avatar.webp";
 import Mode from "../assets/icon-dark-theme.svg";
 import Light from "../assets/icon-light-theme.svg";
+import Theme from "../assets/icon-theme.svg";
+import Logout from "../assets/icon-logout.svg";
 import { useTheme } from "../context/theme-context";
 import { useState } from "react";
 import AddBookmark from "./add-bookmark";
+
 type NavbarProps = {
   searchQuery: string;
   onSearch: (value: string) => void;
@@ -20,6 +23,11 @@ export default function Navbar({
 }: NavbarProps) {
   const { theme, toggleTheme } = useTheme();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   return (
     <nav
@@ -75,11 +83,104 @@ export default function Navbar({
         {isAddModalOpen && (
           <AddBookmark onClose={() => setIsAddModalOpen(false)} />
         )}
-        <img
-          src={Avatar}
-          alt="User avatar"
-          className="h-10 w-10 rounded-full"
-        />
+        <div className="relative">
+          <button
+            onClick={toggleMenu}
+            className="cursor-pointer rounded-md border border-neutral-400 p-0.5"
+          >
+            <img
+              src={Avatar}
+              alt="User avatar"
+              className="h-10 w-10 rounded-full"
+            />
+          </button>
+          {isMenuOpen && (
+            <>
+              {/* background color fix  */}
+              <div
+                className={`absolute right-0 z-50 w-56 flex-col rounded-lg border border-[#004241] p-2 shadow-md ${theme === "dark" ? "bg-[#002E2D]" : "bg-white"}`}
+              >
+                <div className="flex items-center gap-3 border-b border-b-[#E9EAEB] p-2">
+                  <img
+                    className="h-10 w-10 shrink-0 rounded-full"
+                    src={Avatar}
+                    alt="avatar"
+                  />
+                  <div className="min-w-0">
+                    <p
+                      className={`truncate text-sm font-semibold ${theme === "dark" ? "text-white" : "text-[#051513]"}`}
+                    >
+                      Emily Carter
+                    </p>
+                    <p className="truncate text-sm font-medium text-[#4C5C59] dark:text-[#B1B9B9]">
+                      emily101@email.com
+                    </p>
+                  </div>
+                </div>
+                {/* light/dark */}
+                <div className="flex items-center justify-between gap-3 border-b border-b-[#E9EAEB] p-2">
+                  <div className="flex items-center gap-2">
+                    <img
+                      className="h-5 w-5 shrink-0 dark:brightness-0 dark:contrast-100 dark:invert"
+                      src={Theme}
+                      alt="theme"
+                    />
+                    <p
+                      className={`font-manrope text-sm font-semibold ${theme === "dark" ? "text-neutral-100" : "text-[#051513]"}`}
+                    >
+                      Theme
+                    </p>
+                  </div>
+
+                  {/* Toggle light/dark */}
+                  <div className="flex items-center overflow-hidden rounded-md border border-[#D5D7DA]">
+                    <button
+                      onClick={() => theme !== "light" && toggleTheme()}
+                      className={`p-1.5 ${theme === "light" ? "bg-white shadow-sm" : "bg-transparent"}`}
+                    >
+                      <img
+                        src={Light}
+                        alt="light"
+                        className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
+                      />
+                    </button>
+                    <button
+                      onClick={() => theme !== "dark" && toggleTheme()}
+                      className={`p-1.5 ${theme === "dark" ? "bg-white/10 shadow-sm" : "bg-transparent"}`}
+                    >
+                      <img
+                        src={Mode}
+                        alt="dark"
+                        className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
+                      />
+                    </button>
+                  </div>
+                </div>
+                {/* logout */}
+                <div
+                  className="flex cursor-pointer items-center gap-3 p-2"
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    window.location.href = "/sign-in"; // 👈 redirect
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  <img
+                    className="h-5 w-5 shrink-0 rounded-full dark:brightness-0 dark:contrast-100 dark:invert"
+                    src={Logout}
+                    alt="avatar"
+                  />
+                  <p
+                    className={`font-manrope text-sm font-semibold ${theme === "dark" ? "text-neutral-100" : "text-[#051513]"}`}
+                  >
+                    Logout
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+
         <button
           onClick={toggleTheme}
           className="flex items-center justify-center gap-2 rounded-md p-2 text-white shadow-2xs"

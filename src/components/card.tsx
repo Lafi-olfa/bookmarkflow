@@ -12,6 +12,8 @@ import Unarchive from "../assets/icon-unarchive.svg";
 import TagItem from "./tag-item";
 import Modal from "./modal";
 import EditBookmark from "./edit-bookmark";
+import { useTheme } from "../context/theme-context";
+import DropdownMenuItem from "./dropdown-menu-item";
 
 type BookmarkItem = {
   _id: string;
@@ -78,6 +80,7 @@ export default function Card({
     setCopied(true);
     setTimeout(() => setCopied(false), 5000);
   };
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="mx-4 my-3 flex h-auto w-auto max-w-sm flex-col rounded-lg p-4 shadow-md dark:bg-[#002E2D]">
@@ -111,97 +114,45 @@ export default function Card({
           </button>
 
           {isMenuOpen && (
-            <>
-              {/* background color fix  */}
-              <div className="absolute right-0 z-50 flex h-50 w-50 flex-col items-start gap-1 rounded-lg border border-[#004241] bg-[#002E2D] p-2 shadow-[06px14px0rgba(34,38,39,0.10)]">
-                <div className="flex w-full items-center gap-2.5 rounded-md p-2">
-                  <img
-                    className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-                    src={Visit}
-                    alt="visit"
-                  />
-                  <p className="font-manrope w-full text-sm leading-[1.4em] font-semibold text-[#B1B9B9]">
-                    Visit
-                  </p>
-                </div>
-                <div
-                  onClick={handleCopy}
-                  className="flex w-46 cursor-pointer items-center gap-2.5 rounded-md p-2"
-                >
-                  <img
-                    className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-                    src={Copy}
-                    alt="copy"
-                  />
-                  <p className="font-manrope w-full text-sm leading-[1.4em] font-semibold text-[#B1B9B9]">
-                    {copied ? "Copied!" : "Copy URL"}
-                  </p>
-                </div>
-                <div className="flex w-46 items-center gap-2.5 rounded-md p-2">
-                  {pinned ? (
-                    <img
-                      className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-                      src={Unpin}
-                      alt="unpin"
-                    />
-                  ) : (
-                    <img
-                      className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-                      src={Pin}
-                      alt="pin"
-                    />
-                  )}
-
-                  <p className="font-manrope w-full text-sm leading-[1.4em] font-semibold text-[#B1B9B9]">
-                    {pinned ? "Unpin" : "Pin"}
-                  </p>
-                </div>
-                <div
-                  onClick={() => setIsEditModalOpen(true)}
-                  className="flex w-46 cursor-pointer items-center gap-2.5 rounded-md p-2"
-                >
-                  <img
-                    className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-                    src={Edit}
-                    alt="edit"
-                  />
-                  <p className="font-manrope w-full text-sm leading-[1.4em] font-semibold text-[#B1B9B9]">
-                    Edit
-                  </p>
-                </div>
-                {isEditModalOpen && (
-                  <EditBookmark
-                    bookmark={bookmark}
-                    onClose={() => setIsEditModalOpen(false)}
-                    onUpdate={fetchBookmarks}
-                  />
-                )}
-                <div
-                  className="flex w-46 cursor-pointer items-center gap-2.5 rounded-md p-2"
-                  onClick={openArchiveModal}
-                >
-                  {isArchived ? (
-                    <img
-                      className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-                      src={Unarchive}
-                      alt="archive"
-                    />
-                  ) : (
-                    <img
-                      className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
-                      src={Archive}
-                      alt="unarchive"
-                    />
-                  )}
-
-                  <p className="font-manrope w-full text-sm leading-[1.4em] font-semibold text-[#B1B9B9]">
-                    {isArchived ? "Unarchive" : "Archive"}
-                  </p>
-                </div>
-              </div>
-            </>
+            <div
+              className={`absolute right-0 z-50 w-56 flex-col rounded-lg border border-[#004241] p-2 shadow-md ${theme === "dark" ? "bg-[#002E2D]" : "bg-white"}`}
+            >
+              <DropdownMenuItem
+                src={Visit}
+                label="Visit"
+                onClick={() => window.open(url, "_blank")}
+              />
+              <DropdownMenuItem
+                src={Copy}
+                label={copied ? "Copied!" : "Copy URL"}
+                onClick={handleCopy}
+              />
+              <DropdownMenuItem
+                src={pinned ? Unpin : Pin}
+                label={pinned ? "Unpin" : "Pin"}
+              />
+              <DropdownMenuItem
+                src={Edit}
+                label="Edit"
+                onClick={() => {
+                  setIsEditModalOpen(true);
+                  setIsMenuOpen(false);
+                }}
+              />
+              <DropdownMenuItem
+                src={isArchived ? Unarchive : Archive}
+                label={isArchived ? "Unarchive" : "Archive"}
+                onClick={openArchiveModal}
+              />
+            </div>
           )}
-
+          {isEditModalOpen && (
+            <EditBookmark
+              bookmark={bookmark}
+              onClose={() => setIsEditModalOpen(false)}
+              onUpdate={fetchBookmarks}
+            />
+          )}
           {isArchiveModalOpen && (
             <Modal
               id={_id}
@@ -220,9 +171,6 @@ export default function Card({
       <hr className="my-3 text-neutral-300" />
       {/* Content */}
       <p className="space-y-1 text-sm leading-normal dark:text-[#b1b9b9]">
-        {/* Improve your front-end coding skills by building real projects. Solve
-        real-world HTML, CSS and JavaScript challenges whilst working to
-        professional designs. */}
         {description}
       </p>
       {/* Tags */}

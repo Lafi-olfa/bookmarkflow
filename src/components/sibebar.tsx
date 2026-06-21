@@ -47,7 +47,9 @@ export default function Sidebar({
     }, {});
 
   return (
-    <div className="relative min-h-screen w-64 px-4 py-3 dark:bg-[#002E2D]">
+    <div
+      className={`relative min-h-screen w-64 px-4 py-3 ${theme === "dark" ? "bg-[#002E2D]" : "bg-white"}`}
+    >
       <button onClick={onClose} className="absolute top-1 right-1 h-4 w-4">
         <img
           src={Close}
