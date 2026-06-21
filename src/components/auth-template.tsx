@@ -112,7 +112,7 @@ export default function AuthTemplate({
               </button>
               <button
                 type="submit"
-                className="cursor-pointer rounded-lg bg-[#014745] p-2 text-base leading-[1.4] text-white shadow-sm dark:bg-teal-800"
+                className={`cursor-pointer rounded-lg bg-[#014745] p-2 text-base leading-[1.4] text-white shadow-sm ${theme === "dark" ? "bg-teal-800" : "bg-white"}`}
               >
                 {buttonTitle}
               </button>
