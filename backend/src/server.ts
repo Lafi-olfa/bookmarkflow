@@ -14,6 +14,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:5173',
+      "http://localhost:4174",
       'https://bookmarkflow-1922.vercel.app',
       'https://bookmarkflow-production.up.railway.app',
     ],
