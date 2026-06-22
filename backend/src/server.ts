@@ -12,16 +12,34 @@ connectDB();
 const app: Application = express();
 app.use(
   cors({
-    origin: [
-      'http://localhost:5173',
-      "http://localhost:4174",
-      'https://bookmarkflow-1922.vercel.app',
-      'https://bookmarkflow-production.up.railway.app',
-    ],
+    origin: (origin, callback) => {
+      const allowed = [
+        /^http:\/\/localhost:\d+$/,
+        /^https:\/\/bookmarkflow.*\.vercel\.app$/, // 👈 tous les deploys Vercel
+      ];
+
+      if (!origin || allowed.some((pattern) => pattern.test(origin))) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS blocked: ${origin}`));
+      }
+    },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
+// app.use(
+//   cors({
+//     origin: [
+//       'http://localhost:5173',
+//       "http://localhost:4174",
+//       'https://bookmarkflow-1922.vercel.app',
+//       'https://bookmarkflow-production.up.railway.app',
+//     ],
+//     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//   })
+// );
 
 app.use(express.json());
 // routes
