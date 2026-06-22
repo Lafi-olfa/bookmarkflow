@@ -13,19 +13,20 @@ const app: Application = express();
 app.use(
   cors({
     origin: (origin, callback) => {
-      const allowed = [
-        /^http:\/\/localhost:\d+$/,
-        /^https:\/\/bookmarkflow.*\.vercel\.app$/, // 👈 tous les deploys Vercel
-      ];
-
-      if (!origin || allowed.some((pattern) => pattern.test(origin))) {
-        callback(null, true);
-      } else {
-        callback(new Error(`CORS blocked: ${origin}`));
-      }
+      // Autorise si pas d'origin (Postman, mobile)
+      if (!origin) return callback(null, true);
+      
+      // Autorise localhost (dev)
+      if (origin.startsWith("http://localhost")) return callback(null, true);
+      
+      // Autorise tout ce qui vient de vercel.app
+      if (origin.endsWith(".vercel.app")) return callback(null, true);
+      
+      // Bloque le reste
+      callback(new Error("CORS bloqué"));
     },
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 // app.use(
