@@ -48,6 +48,8 @@ app.use(
       if (origin.startsWith('http://localhost')) return callback(null, true);
       if (origin.endsWith('.vercel.app')) return callback(null, true);
       if (origin.endsWith('.onrender.com')) return callback(null, true);
+            if (origin.endsWith('.railway.app')) return callback(null, true);  // ← ajoute ça
+
       callback(new Error('CORS bloqué'));
     },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
