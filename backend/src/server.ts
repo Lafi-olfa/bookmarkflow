@@ -10,29 +10,29 @@ dotenv.config();
 connectDB();
 
 const app: Application = express();
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Autorise si pas d'origin (Postman, mobile)
-      if (!origin) return callback(null, true);
-      
-      // Autorise localhost (dev)
-      if (origin.startsWith("http://localhost")) return callback(null, true);
-      
-      // Autorise tout ce qui vient de vercel.app
-      if (origin.endsWith(".vercel.app")) return callback(null, true);
-      
-      // Bloque le reste
-      callback(new Error("CORS bloqué"));
-    },
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       // Autorise si pas d'origin (Postman, mobile)
+//       if (!origin) return callback(null, true);
+
+//       // Autorise localhost (dev)
+//       if (origin.startsWith("http://localhost")) return callback(null, true);
+
+//       // Autorise tout ce qui vient de vercel.app
+//       if (origin.endsWith(".vercel.app")) return callback(null, true);
+
+//       // Bloque le reste
+//       callback(new Error("CORS bloqué"));
+//     },
+//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
 // app.use(
 //   cors({
 //     origin: [
-//       'http://localhost:5173',
+//       'http://localhost:5174',
 //       "http://localhost:4174",
 //       'https://bookmarkflow-1922.vercel.app',
 //       'https://bookmarkflow-production.up.railway.app',
@@ -41,7 +41,19 @@ app.use(
 //     allowedHeaders: ['Content-Type', 'Authorization'],
 //   })
 // );
-
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (origin.startsWith('http://localhost')) return callback(null, true);
+      if (origin.endsWith('.vercel.app')) return callback(null, true);
+      if (origin.endsWith('.onrender.com')) return callback(null, true);
+      callback(new Error('CORS bloqué'));
+    },
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 app.use(express.json());
 // routes
 app.use('/api/bookmarks', bookmarkRoutes);
@@ -50,7 +62,7 @@ app.use('/api/bookmarks/:id', auth, bookmarkRoutes);
 
 // user
 app.use('/api/auth', userRoutes);
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);

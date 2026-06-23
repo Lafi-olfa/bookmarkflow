@@ -41,7 +41,7 @@ export default function EditBookmark({
 
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/bookmarks/${bookmark._id}`,
+        `http://localhost:10000/api/bookmarks/${bookmark._id}`,
         {
           method: "PATCH",
           headers: {

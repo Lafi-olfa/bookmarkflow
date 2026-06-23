@@ -21,7 +21,7 @@ export default function SignIn() {
   };
 
   async function signIn(data: DataForm) {
-    const res = await fetch(` ${import.meta.env.VITE_API_URL}/api/auth/login`, {
+    const res = await fetch("http://localhost:10000/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +33,10 @@ export default function SignIn() {
       const error = await res.json();
       throw new Error(error.message || "Signup failed");
     }
+
     const result = await res.json();
+    console.log("result", result);
+
     localStorage.setItem("token", result.token);
 
     return result;
@@ -43,6 +46,7 @@ export default function SignIn() {
     e.preventDefault();
     try {
       await signIn(formData);
+
       navigate("/bookmarks");
     } catch (err) {
       console.error("Sign-In error:", err);

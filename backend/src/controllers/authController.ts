@@ -43,6 +43,7 @@ export const loginUser = async (req: Request, res: Response) => {
   try {
     // 1. user
     const user = await User.findOne({ email });
+    console.log(user);
 
     if (!user) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -71,6 +72,7 @@ export const loginUser = async (req: Request, res: Response) => {
       email: user.email,
       userName: user.fullName,
     };
+    console.log(userResponse);
 
     // 6. return response
     res.status(200).json({

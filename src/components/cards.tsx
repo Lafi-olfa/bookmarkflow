@@ -31,7 +31,7 @@ export default function Cards({
 
   const fetchBookmarks = async () => {
     setIsLoading(true);
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/bookmarks/`);
+    const res = await fetch("http://localhost:10000/api/bookmarks/");
 
     const data = await res.json();
     setBookmarks(data);
@@ -40,17 +40,14 @@ export default function Cards({
 
   const handleArchive = async (id: string, isArchived: boolean) => {
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/bookmarks/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ isArchived: !isArchived }),
+      const res = await fetch(`http://localhost:10000/api/bookmarks/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify({ isArchived: !isArchived }),
+      });
 
       if (!res.ok) {
         const error = await res.json();

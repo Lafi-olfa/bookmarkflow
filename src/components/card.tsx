@@ -78,7 +78,7 @@ export default function Card({
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
     setCopied(true);
-    setTimeout(() => setCopied(false), 5000);
+    setTimeout(() => setCopied(false), 10000);
   };
   const { theme } = useTheme();
 

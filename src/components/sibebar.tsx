@@ -27,7 +27,7 @@ export default function Sidebar({
 
     const loadBookmarks = async () => {
       setIsLoading(true);
-      const res = await fetch(` ${import.meta.env.VITE_API_URL}/api/bookmarks`);
+      const res = await fetch("http://localhost:10000/api/bookmarks");
 
       const data = await res.json();
       if (isMounted) {

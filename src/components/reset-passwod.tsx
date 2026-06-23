@@ -26,19 +26,16 @@ export default function ResetPassword() {
     if (!token) {
       throw new Error("Verify token");
     }
-    const res = await fetch(
-      ` ${import.meta.env.VITE_API_URL}/api/auth/reset-password`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: token,
-          password: data.password,
-        }),
+    const res = await fetch("http://localhost:10000/api/auth/reset-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        token: token,
+        password: data.password,
+      }),
+    });
 
     if (!res.ok) {
       const error = await res.json();
