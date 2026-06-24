@@ -44,9 +44,11 @@ const app: Application = express();
 app.use(
   cors({
     origin: (origin, callback) => {
+      console.log(origin);
+      
       if (!origin) return callback(null, true);
       if (origin.startsWith("http://localhost")) return callback(null, true);
-      if (origin.endsWith(".vercel.app")) return callback(null, true);
+if (origin.includes("vercel.app")) return callback(null, true);
       if (origin.endsWith(".railway.app")) return callback(null, true);
       // Ajoute ton URL Vercel exacte
       if (origin === "https://bookmarkflow.vercel.app") return callback(null, true);
