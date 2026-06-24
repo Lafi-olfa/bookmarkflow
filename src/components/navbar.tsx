@@ -117,7 +117,7 @@ export default function Navbar({
                 <div className="flex items-center justify-between gap-3 border-b border-b-[#E9EAEB] p-2">
                   <div className="flex items-center gap-2">
                     <img
-                      className="h-5 w-5 shrink-0 dark:brightness-0 dark:contrast-100 dark:invert"
+                      className="h-5 w-5 shrink-0 "
                       src={Theme}
                       alt="theme"
                     />

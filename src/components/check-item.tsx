@@ -1,3 +1,5 @@
+import { useTheme } from "../context/theme-context";
+
 interface CheckItemsProps {
   name: string;
   count: string;
@@ -10,6 +12,8 @@ export default function Checktem({
   checked,
   onChange,
 }: CheckItemsProps) {
+    const { theme} = useTheme();
+  
   return (
     <div className="flex items-center justify-between px-2 py-1">
       <div className="flex gap-2">
@@ -20,7 +24,7 @@ export default function Checktem({
           name=""
           id=""
         />
-        <span className="text-base leading-[1.4] dark:text-neutral-100">
+        <span className={`text-base leading-[1.4] ${theme === "dark" ? "text-neutral-100" : "text-neutral-800"}`}>
           {name}
         </span>
       </div>

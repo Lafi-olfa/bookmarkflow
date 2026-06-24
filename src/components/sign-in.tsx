@@ -21,7 +21,7 @@ export default function SignIn() {
   };
 
   async function signIn(data: DataForm) {
-    const res = await fetch("http://localhost:10000/api/auth/login", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

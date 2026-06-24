@@ -27,7 +27,7 @@ export default function Sidebar({
 
     const loadBookmarks = async () => {
       setIsLoading(true);
-      const res = await fetch("http://localhost:10000/api/bookmarks");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/bookmarks`);
 
       const data = await res.json();
       if (isMounted) {
@@ -52,7 +52,7 @@ export default function Sidebar({
 
   return (
     <div
-      className={`relative min-h-screen w-64 px-4 py-3 ${theme === "dark" ? "bg-[#002E2D]" : "bg-white"}`}
+      className={`relative min-h-screen w-64 px-4 py-3 ${theme === "dark" ? "bg-[#002E2D] text-white" : "bg-white text-neutral-800"}`}
     >
       <button onClick={onClose} className="absolute top-1 right-1 h-4 w-4">
         <img
