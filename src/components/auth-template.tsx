@@ -74,7 +74,7 @@ export default function AuthTemplate({
             {title}
           </p>
 
-          <p className="font-manrope max-w-xs text-sm font-medium tracking-[0.01em] text-[#4C5C59] dark:text-neutral-100">
+          <p className="font-manrope max-w-xs text-sm font-medium tracking-[0.01em] text-[#4C5C59] dark:text-neutral-800">
             {description}
           </p>
         </div>
