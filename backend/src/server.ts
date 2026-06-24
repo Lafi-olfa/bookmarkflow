@@ -45,15 +45,16 @@ app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true);
-      if (origin.startsWith('http://localhost')) return callback(null, true);
-      if (origin.endsWith('.vercel.app')) return callback(null, true);
-      if (origin.endsWith('.onrender.com')) return callback(null, true);
-            if (origin.endsWith('.railway.app')) return callback(null, true);  // ← ajoute ça
-
-      callback(new Error('CORS bloqué'));
+      if (origin.startsWith("http://localhost")) return callback(null, true);
+      if (origin.endsWith(".vercel.app")) return callback(null, true);
+      if (origin.endsWith(".railway.app")) return callback(null, true);
+      // Ajoute ton URL Vercel exacte
+      if (origin === "https://bookmarkflow.vercel.app") return callback(null, true);
+      callback(new Error("CORS bloqué"));
     },
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
 app.use(express.json());
