@@ -35,7 +35,6 @@ export default function SignIn() {
     }
 
     const result = await res.json();
-    console.log("result", result);
 
     localStorage.setItem("token", result.token);
 
@@ -45,8 +44,9 @@ export default function SignIn() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await signIn(formData);
-
+      const x= await signIn(formData);
+      console.log(x);
+      
       navigate("/bookmarks");
     } catch (err) {
       console.error("Sign-In error:", err);

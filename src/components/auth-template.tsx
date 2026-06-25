@@ -49,7 +49,7 @@ export default function AuthTemplate({
     // </div>
     <div className="flex items-center justify-center">
       <div
-        className={`w-full max-w-md rounded-2xl px-2 py-4 ${theme === "dark" ? "bg-[#002E2D]" : "bg-white"}`}
+        className={`w-full max-w-md rounded-2xl px-2 py-4 ${theme === "dark" ?  "bg-white": "bg-[#002E2D]"}`}
       >
         <div className="flex items-center justify-between">
           <img

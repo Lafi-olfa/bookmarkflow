@@ -25,7 +25,7 @@ export default function Checktem({
           id=""
         />
         <span
-          className={`text-base leading-[1.4] ${theme === "dark" ? "text-neutral-800" : "text-neutral-100"}`}
+          className={`text-base leading-[1.4] ${theme === "dark" ? "text-neutral-100" : "text-neutral-800"}`}
         >
           {name}
         </span>
