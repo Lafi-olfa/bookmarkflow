@@ -116,7 +116,11 @@ export default function Navbar({
                 {/* light/dark */}
                 <div className="flex items-center justify-between gap-3 border-b border-b-[#E9EAEB] p-2">
                   <div className="flex items-center gap-2">
-                    <img className="h-5 w-5 shrink-0" src={Theme} alt="theme" />
+                    <img
+                      className="h-4 w-4 dark:brightness-0 dark:contrast-100 dark:invert"
+                      src={Theme}
+                      alt="theme"
+                    />
                     <p
                       className={`font-manrope text-sm font-semibold ${theme === "dark" ? "text-neutral-100" : "text-[#051513]"}`}
                     >
@@ -150,10 +154,10 @@ export default function Navbar({
                 </div>
                 {/* logout */}
                 <div
-                  className="flex cursor-pointer items-center gap-3 p-2"
+                  className={`flex cursor-pointer items-center gap-3 p-2 ${theme === "dark" ? "text-white/10 shadow-sm" : "text-transparent"}`}
                   onClick={() => {
                     localStorage.removeItem("token");
-                    window.location.href = "/sign-in"; // 👈 redirect
+                    window.location.href = "/sign-in";
                     setIsMenuOpen(false);
                   }}
                 >
