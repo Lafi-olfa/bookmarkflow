@@ -22,7 +22,7 @@ export default function AddBookmark({ onClose }: { onClose: () => void }) {
   };
 
   async function addNewBookmark(data: DataForm) {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/bookmarks/add`, {
+    const res = await fetch("ttp://localhost:10000/api/bookmarks/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

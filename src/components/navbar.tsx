@@ -116,11 +116,7 @@ export default function Navbar({
                 {/* light/dark */}
                 <div className="flex items-center justify-between gap-3 border-b border-b-[#E9EAEB] p-2">
                   <div className="flex items-center gap-2">
-                    <img
-                      className="h-5 w-5 shrink-0 "
-                      src={Theme}
-                      alt="theme"
-                    />
+                    <img className="h-5 w-5 shrink-0" src={Theme} alt="theme" />
                     <p
                       className={`font-manrope text-sm font-semibold ${theme === "dark" ? "text-neutral-100" : "text-[#051513]"}`}
                     >
