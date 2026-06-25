@@ -76,7 +76,7 @@ export default function Sidebar({
           <span>Home</span>
         </div>
         <div
-          className={`flex items-center justify-start gap-2 px-2 py-1 ${theme === "dark" ? "text-neutral-800" : "text-neutral-100"}`}
+          className={`flex items-center justify-start gap-2 px-2 py-1 ${theme === "dark" ? "text-neutral-100" : "text-neutral-800"}`}
         >
           <img
             src={Archive}
@@ -87,7 +87,7 @@ export default function Sidebar({
         </div>
       </div>
       <span
-        className={`px-2 py-1 text-base leading-[1.4] ${theme === "dark" ? "text-neutral-800" : "text-neutral-100"}`}
+        className={`px-2 py-1 text-base leading-[1.4] ${theme === "dark" ? "text-neutral-100" : "text-neutral-800"}`}
       >
         TAGS
       </span>

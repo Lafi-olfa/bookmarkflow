@@ -132,7 +132,7 @@ export default function Navbar({
                   <div className="flex items-center overflow-hidden rounded-md border border-[#D5D7DA]">
                     <button
                       onClick={() => theme !== "light" && toggleTheme()}
-                      className={`p-1.5 ${theme === "light" ? "bg-white shadow-sm" : "bg-transparent"}`}
+                      className={`p-1.5 {theme === "dark" ? "bg-neutral-100" : "bg-[#051513]"`}
                     >
                       <img
                         src={Light}
@@ -142,7 +142,7 @@ export default function Navbar({
                     </button>
                     <button
                       onClick={() => theme !== "dark" && toggleTheme()}
-                      className={`p-1.5 ${theme === "dark" ? "bg-white/10 shadow-sm" : "bg-transparent"}`}
+                      className={`p-1.5{theme === "dark" ? "bg-neutral-100" : "bg-[#051513]"`}
                     >
                       <img
                         src={Mode}
